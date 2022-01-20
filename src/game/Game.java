@@ -6,18 +6,24 @@ public class Game {
 
     boolean running;
     Display display;
+    InputListener inputListener;
+    Player player;
 
     private Game() {}
 
     private void init() {
         running = true;
         display = new Display();
+        inputListener = new InputListener();
+        display.addListeners(inputListener);
+        player = new Player(inputListener);
 
         loop();
     }
 
     private void update() {
-        display.render();
+        display.render(player);
+        player.update();
     }
 
     private void loop() {

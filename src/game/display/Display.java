@@ -1,9 +1,13 @@
 package game.display;
 
+import game.InputListener;
+import game.Player;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import java.util.EventListener;
 
 public class Display {
@@ -31,12 +35,12 @@ public class Display {
         renderer = new Renderer();
     }
 
-    public void addListeners(EventListener listener) {
-        frame.addKeyListener((KeyListener) listener);
+    public void addListeners(InputListener listener) {
+        frame.addKeyListener(listener);
     }
 
-    public void render() {
-        renderer.render(canvas);
+    public void render(Player player) {
+        renderer.render(canvas, player);
     }
 
     private static class Renderer {
@@ -46,7 +50,7 @@ public class Display {
         Renderer() {
         }
 
-        void render(Canvas canvas) {
+        void render(Canvas canvas, Player player) {
             bufferStrategy = canvas.getBufferStrategy();
             if (bufferStrategy == null) {
                 canvas.createBufferStrategy(3);
@@ -59,9 +63,12 @@ public class Display {
             g.setColor(Color.black);
             g.fillRect(0, 0, 1280, 720);
 
-
-            g.setColor(Color.green);
-            g.fillRect(200, 200, 32, 32);
+            int red = (int) (Math.random() * 256.0);
+            int green = (int) (Math.random() * 256.0);
+            int blue = (int) (Math.random() * 256.0);
+            g.setColor(new Color(red, green, blue));
+            Point p = player.getLocation();
+            g.fillRect(p.x, p.y, 32, 32);
 
             bufferStrategy.show();
             g.dispose();
