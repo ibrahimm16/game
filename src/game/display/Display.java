@@ -1,14 +1,10 @@
 package game.display;
 
 import game.InputListener;
-import game.Player;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
-import java.util.EventListener;
 
 public class Display {
 
@@ -39,36 +35,50 @@ public class Display {
         frame.addKeyListener(listener);
     }
 
-    public void render(Player player) {
-        renderer.render(canvas, player);
+    public Graphics2D render() {
+        return renderer.render();
     }
 
-    private static class Renderer {
+    public void show() {
+        renderer.show();
+    }
+
+    private class Renderer {
         Graphics2D g;
         BufferStrategy bufferStrategy;
 
         Renderer() {
         }
 
-        void render(Canvas canvas, Player player) {
+        Graphics2D render() {
             bufferStrategy = canvas.getBufferStrategy();
             if (bufferStrategy == null) {
                 canvas.createBufferStrategy(3);
-                return;
+                return null;
             }
 
             g = (Graphics2D) bufferStrategy.getDrawGraphics();
             g.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
             g.setColor(Color.black);
             g.fillRect(0, 0, 1280, 720);
 
-            int red = (int) (Math.random() * 256.0);
-            int green = (int) (Math.random() * 256.0);
-            int blue = (int) (Math.random() * 256.0);
-            g.setColor(new Color(red, green, blue));
-            Point p = player.getLocation();
-            g.fillRect(p.x, p.y, 32, 32);
+            return g;
+        }
+
+        void show() {
+//            bufferStrategy = canvas.getBufferStrategy();
+//            if (bufferStrategy == null) {
+//                canvas.createBufferStrategy(3);
+//                return;
+//            }
+//
+//            g = (Graphics2D) bufferStrategy.getDrawGraphics();
+//            g.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//
+//            g.setColor(Color.black);
+//            g.fillRect(0, 0, 1280, 720);
+//
+//            player.render(g);
 
             bufferStrategy.show();
             g.dispose();

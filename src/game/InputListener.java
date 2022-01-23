@@ -11,10 +11,6 @@ public class InputListener implements KeyListener {
 
     public InputListener() {
         keysPressed = new HashMap<>();
-        keysPressed.put('w', false);
-        keysPressed.put('a', false);
-        keysPressed.put('s', false);
-        keysPressed.put('d', false);
     }
 
     @Override

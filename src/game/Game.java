@@ -2,6 +2,8 @@ package game;
 
 import game.display.Display;
 
+import java.awt.*;
+
 public class Game {
 
     boolean running;
@@ -22,8 +24,16 @@ public class Game {
     }
 
     private void update() {
-        display.render(player);
         player.update();
+        render();
+    }
+
+    private void render() {
+        Graphics2D g = display.render();
+        if (g != null) {
+            player.render(g);
+            display.show();
+        }
     }
 
     private void loop() {
